@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <title>Recruitment Candidate List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #1916cac8, #08068a);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 450;
+            transition: color 0.3s ease;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .filters-panel {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+        }
+        
+        .panel-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .filter-select, .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-select:focus, .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            background-color: white;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .filter-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-btn {
+            background: linear-gradient(135deg, #1916cac8, #08068a);
+            color: white;
+        }
+        
+        .apply-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .reset-btn {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .reset-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .main-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .results-count {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .sort-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .sort-select {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 1rem;
+        }
+        
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .candidate-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .candidate-name {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .availability {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .available {
+            background-color: #e8f6f3;
+            color: #1abc9c;
+        }
+        
+        .not-available {
+            background-color: #fdedec;
+            color: #e74c3c;
+        }
+        
+        .education {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .skill {
+            background-color: #e8f4fc;
+            color: #3498db;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .candidate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .experience {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #1916cac8, #08068a);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .candidate-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .controls-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .sort-options {
+                width: 100%;
+            }
+            
+            .sort-select {
+                flex: 1;
+            }
+            
+            .candidate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-container">
+                <div class="header-left">
+                    <h1>Candidate Database</h1>
+                    <p class="subtitle">Find the perfect talent for your organization</p>
+                <p>____________________________________________________________</p>
+                </div>
+                <br>
+                <nav class="header-links">
+                    <a style="padding:10px" href="/Recruiter/Recruiters Job Posting.html">Post Job</a>
+                    <a style="padding:10px" href="/Recruiter/Recruit Sign-In.html">Profile</a>
+                </nav>
+            </div>
+        </header>
+
+        
+        <div class="dashboard">
+            <!-- Filters Panel -->
+            <div class="filters-panel">
+                <h3 class="panel-title">Filters</h3>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search by name, skills, or education...">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Education Level</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="education" value="B.Tech" checked>
+                            B.Tech
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="education" value="M.Tech" checked>
+                            M.Tech
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="education" value="PhD" checked>
+                            PhD
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="education" value="MBA" checked>
+                            MBA
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select" id="availabilityFilter">
+                        <option value="all">All Candidates</option>
+                        <option value="available">Available Now</option>
+                        <option value="not-available">Not Available</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Experience Level</label>
+                    <select class="filter-select" id="experienceFilter">
+                        <option value="all">All Experience Levels</option>
+                        <option value="0-2">0-2 Years</option>
+                        <option value="3-5">3-5 Years</option>
+                        <option value="5+">5+ Years</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Primary Skill</label>
+                    <select class="filter-select" id="skillFilter">
+                        <option value="all">All Skills</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Data Analysis">Data Analysis</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="React">React</option>
+                        <option value="Project Management">Project Management</option>
+                        <option value="CAD">CAD</option>
+                        <option value="Marketing">Marketing</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button class="filter-btn apply-btn" id="applyFilters">Apply Filters</button>
+                    <button class="filter-btn reset-btn" id="resetFilters">Reset</button>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="controls-bar">
+                    <div class="results-count">
+                        Showing <span id="resultsCount">30</span> candidates
+                    </div>
+                    <div class="sort-options">
+                        <span class="sort-label">Sort by:</span>
+                        <select class="sort-select" id="sortSelect">
+                            <option value="name">Name (A-Z)</option>
+                            <option value="name-desc">Name (Z-A)</option>
+                            <option value="experience">Experience (Low to High)</option>
+                            <option value="experience-desc">Experience (High to Low)</option>
+                            <option value="availability">Availability</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="candidate-grid" id="candidateGrid">
+                    <!-- Candidate cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Recruitment Candidate Database &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // Candidate data
+        const candidates = [
+            {
+                id: 1,
+                name: "Sarah Johnson",
+                education: "M.Tech in Computer Science",
+                skills: ["Machine Learning", "Python", "Data Analysis", "TensorFlow"],
+                availability: "available",
+                experience: 4
+            },
+            {
+                id: 2,
+                name: "Michael Chen",
+                education: "B.Tech in Electrical Engineering",
+                skills: ["Circuit Design", "MATLAB", "Embedded Systems", "Project Management"],
+                availability: "available",
+                experience: 2
+            },
+            {
+                id: 3,
+                name: "Priya Sharma",
+                education: "PhD in Biotechnology",
+                skills: ["CRISPR", "Data Analysis", "Molecular Biology", "Research"],
+                availability: "not-available",
+                experience: 6
+            },
+            {
+                id: 4,
+                name: "David Williams",
+                education: "MBA in Finance",
+                skills: ["Financial Modeling", "Excel", "Strategic Planning", "Market Analysis"],
+                availability: "available",
+                experience: 5
+            },
+            {
+                id: 5,
+                name: "Emily Rodriguez",
+                education: "B.Tech in Mechanical Engineering",
+                skills: ["CAD", "SolidWorks", "Thermodynamics", "Project Management"],
+                availability: "available",
+                experience: 3
+            },
+            {
+                id: 6,
+                name: "James Wilson",
+                education: "M.Tech in Data Science",
+                skills: ["Python", "R", "SQL", "Tableau"],
+                availability: "not-available",
+                experience: 4
+            },
+            {
+                id: 7,
+                name: "Linda Anderson",
+                education: "PhD in Psychology",
+                skills: ["Research", "Statistical Analysis", "Counseling", "Data Interpretation"],
+                availability: "available",
+                experience: 7
+            },
+            {
+                id: 8,
+                name: "Robert Kim",
+                education: "B.Tech in Computer Science",
+                skills: ["Java", "Spring Boot", "React", "AWS"],
+                availability: "available",
+                experience: 2
+            },
+            {
+                id: 9,
+                name: "Maria Garcia",
+                education: "M.Tech in Environmental Engineering",
+                skills: ["Sustainability", "GIS", "Water Resources", "Project Management"],
+                availability: "not-available",
+                experience: 5
+            },
+            {
+                id: 10,
+                name: "Thomas Martin",
+                education: "MBA in Marketing",
+                skills: ["Digital Marketing", "SEO", "Brand Management", "Market Research"],
+                availability: "available",
+                experience: 4
+            },
+            {
+                id: 11,
+                name: "Jennifer Lee",
+                education: "B.Tech in Information Technology",
+                skills: ["JavaScript", "Node.js", "MongoDB", "UI/UX Design"],
+                availability: "available",
+                experience: 3
+            },
+            {
+                id: 12,
+                name: "Christopher Brown",
+                education: "M.Tech in Artificial Intelligence",
+                skills: ["Deep Learning", "Python", "Neural Networks", "Computer Vision"],
+                availability: "not-available",
+                experience: 5
+            },
+            {
+                id: 13,
+                name: "Amanda White",
+                education: "PhD in Chemistry",
+                skills: ["Analytical Chemistry", "HPLC", "Research & Development", "Laboratory Management"],
+                availability: "available",
+                experience: 8
+            },
+            {
+                id: 14,
+                name: "Daniel Taylor",
+                education: "B.Tech in Civil Engineering",
+                skills: ["AutoCAD", "Structural Analysis", "Project Planning", "Construction Management"],
+                availability: "available",
+                experience: 3
+            },
+            {
+                id: 15,
+                name: "Sophia Martinez",
+                education: "MBA in Human Resources",
+                skills: ["Talent Acquisition", "Employee Relations", "HR Policies", "Performance Management"],
+                availability: "not-available",
+                experience: 6
+            },
+            {
+                id: 16,
+                name: "Kevin Anderson",
+                education: "M.Tech in Renewable Energy",
+                skills: ["Solar Energy", "Energy Storage", "Sustainability", "Project Management"],
+                availability: "available",
+                experience: 4
+            },
+            {
+                id: 17,
+                name: "Rachel Green",
+                education: "B.Tech in Electronics & Communication",
+                skills: ["VLSI Design", "Embedded Systems", "Signal Processing", "PCB Design"],
+                availability: "available",
+                experience: 2
+            },
+            {
+                id: 18,
+                name: "Matthew Clark",
+                education: "PhD in Physics",
+                skills: ["Quantum Mechanics", "Data Analysis", "Mathematical Modeling", "Research"],
+                availability: "not-available",
+                experience: 9
+            },
+            {
+                id: 19,
+                name: "Olivia Wright",
+                education: "M.Tech in Biomedical Engineering",
+                skills: ["Medical Devices", "Biomaterials", "Regulatory Affairs", "Product Development"],
+                availability: "available",
+                experience: 5
+            },
+            {
+                id: 20,
+                name: "Andrew Hill",
+                education: "B.Tech in Chemical Engineering",
+                skills: ["Process Optimization", "Petroleum Engineering", "Quality Control", "Safety Management"],
+                availability: "available",
+                experience: 3
+            },
+            {
+                id: 21,
+                name: "Ethan Walker",
+                education: "M.Tech in Cybersecurity",
+                skills: ["Network Security", "Ethical Hacking", "Incident Response", "SIEM"],
+                availability: "available",
+                experience: 4
+            },
+            {
+                id: 22,
+                name: "Jessica King",
+                education: "B.Tech in Computer Science",
+                skills: ["Java", "Spring Framework", "Microservices", "Docker"],
+                availability: "not-available",
+                experience: 2
+            },
+            {
+                id: 23,
+                name: "Brian Scott",
+                education: "PhD in Data Science",
+                skills: ["Machine Learning", "Big Data", "Statistical Analysis", "Hadoop"],
+                availability: "available",
+                experience: 7
+            },
+            {
+                id: 24,
+                name: "Natalie Adams",
+                education: "M.Tech in Information Security",
+                skills: ["Penetration Testing", "Digital Forensics", "Security Auditing", "Cryptography"],
+                availability: "available",
+                experience: 5
+            },
+            {
+                id: 25,
+                name: "Samuel Baker",
+                education: "B.Tech in Mechanical Engineering",
+                skills: ["CAD/CAM", "Thermal Analysis", "Product Design", "Lean Manufacturing"],
+                availability: "not-available",
+                experience: 3
+            },
+            {
+                id: 26,
+                name: "Victoria Carter",
+                education: "MBA in International Business",
+                skills: ["Market Analysis", "Strategic Planning", "Cross-cultural Communication", "Business Development"],
+                availability: "available",
+                experience: 6
+            },
+            {
+                id: 27,
+                name: "Jason Reed",
+                education: "B.Tech in Cybersecurity",
+                skills: ["Vulnerability Assessment", "Firewall Management", "Security Policies", "Cloud Security"],
+                availability: "available",
+                experience: 2
+            },
+            {
+                id: 28,
+                name: "Hannah Phillips",
+                education: "M.Tech in Artificial Intelligence",
+                skills: ["Natural Language Processing", "Computer Vision", "TensorFlow", "Reinforcement Learning"],
+                availability: "not-available",
+                experience: 4
+            },
+            {
+                id: 29,
+                name: "Aaron Young",
+                education: "B.Tech in Electrical Engineering",
+                skills: ["Power Systems", "Control Systems", "PLC Programming", "Renewable Energy"],
+                availability: "available",
+                experience: 3
+            },
+            {
+                id: 30,
+                name: "Mia Roberts",
+                education: "PhD in Neuroscience",
+                skills: ["Brain Imaging", "Data Analysis", "Experimental Design", "Scientific Writing"],
+                availability: "not-available",
+                experience: 8
+            }
+        ];
+
+        // DOM Elements
+        const candidateGrid = document.getElementById('candidateGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        const searchBox = document.getElementById('searchBox');
+        const availabilityFilter = document.getElementById('availabilityFilter');
+        const experienceFilter = document.getElementById('experienceFilter');
+        const skillFilter = document.getElementById('skillFilter');
+        const sortSelect = document.getElementById('sortSelect');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const resetFiltersBtn = document.getElementById('resetFilters');
+        const educationCheckboxes = document.querySelectorAll('input[name="education"]');
+
+        // State
+        let filteredCandidates = [...candidates];
+        let currentFilters = {
+            search: '',
+            education: ['B.Tech', 'M.Tech', 'PhD', 'MBA'],
+            availability: 'all',
+            experience: 'all',
+            skill: 'all'
+        };
+
+        // Initialize the page
+        function init() {
+            renderCandidates();
+            setupEventListeners();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Search box
+            searchBox.addEventListener('input', function() {
+                currentFilters.search = this.value.toLowerCase();
+                applyFilters();
+            });
+
+            // Filter selects
+            availabilityFilter.addEventListener('change', function() {
+                currentFilters.availability = this.value;
+                applyFilters();
+            });
+
+            experienceFilter.addEventListener('change', function() {
+                currentFilters.experience = this.value;
+                applyFilters();
+            });
+
+            skillFilter.addEventListener('change', function() {
+                currentFilters.skill = this.value;
+                applyFilters();
+            });
+
+            // Education checkboxes
+            educationCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const educationLevels = Array.from(educationCheckboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value);
+                    
+                    currentFilters.education = educationLevels;
+                    applyFilters();
+                });
+            });
+
+            // Sort select
+            sortSelect.addEventListener('change', function() {
+                applyFilters();
+            });
+
+            // Reset filters button
+            resetFiltersBtn.addEventListener('click', resetFilters);
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            filteredCandidates = candidates.filter(candidate => {
+                // Search filter
+                if (currentFilters.search) {
+                    const searchText = currentFilters.search;
+                    const candidateText = (
+                        candidate.name.toLowerCase() + 
+                        candidate.education.toLowerCase() + 
+                        candidate.skills.join(' ').toLowerCase()
+                    );
+                    
+                    if (!candidateText.includes(searchText)) {
+                        return false;
+                    }
+                }
+
+                // Education filter
+                if (!currentFilters.education.some(edu => candidate.education.includes(edu))) {
+                    return false;
+                }
+
+                // Availability filter
+                if (currentFilters.availability !== 'all' && 
+                    candidate.availability !== currentFilters.availability) {
+                    return false;
+                }
+
+                // Experience filter
+                if (currentFilters.experience !== 'all') {
+                    if (currentFilters.experience === '0-2' && candidate.experience > 2) return false;
+                    if (currentFilters.experience === '3-5' && (candidate.experience < 3 || candidate.experience > 5)) return false;
+                    if (currentFilters.experience === '5+' && candidate.experience <= 5) return false;
+                }
+
+                // Skill filter
+                if (currentFilters.skill !== 'all' && 
+                    !candidate.skills.includes(currentFilters.skill)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Apply sorting
+            sortCandidates();
+
+            // Render results
+            renderCandidates();
+        }
+
+        // Sort candidates based on current sort option
+        function sortCandidates() {
+            const sortValue = sortSelect.value;
+
+            switch(sortValue) {
+                case 'name':
+                    filteredCandidates.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    filteredCandidates.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'experience':
+                    filteredCandidates.sort((a, b) => a.experience - b.experience);
+                    break;
+                case 'experience-desc':
+                    filteredCandidates.sort((a, b) => b.experience - a.experience);
+                    break;
+                case 'availability':
+                    filteredCandidates.sort((a, b) => {
+                        if (a.availability === 'available' && b.availability !== 'available') return -1;
+                        if (a.availability !== 'available' && b.availability === 'available') return 1;
+                        return 0;
+                    });
+                    break;
+            }
+        }
+
+        // Render candidate cards
+        function renderCandidates() {
+            candidateGrid.innerHTML = '';
+
+            if (filteredCandidates.length === 0) {
+                candidateGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>No candidates found</h3>
+                        <p>Try adjusting your filters to see more results</p>
+                    </div>
+                `;
+                resultsCount.textContent = '0';
+                return;
+            }
+
+            filteredCandidates.forEach(candidate => {
+                const candidateCard = document.createElement('div');
+                candidateCard.className = 'candidate-card';
+
+                candidateCard.innerHTML = `
+                    <div class="candidate-header">
+                        <h3 class="candidate-name">${candidate.name}</h3>
+                        <span class="availability ${candidate.availability}">
+                            ${candidate.availability === 'available' ? 'Available Now' : 'Not Available'}
+                        </span>
+                    </div>
+                    <p class="education">${candidate.education}</p>
+                    <div class="skills">
+                        ${candidate.skills.map(skill => `<span class="skill">${skill}</span>`).join('')}
+                    </div>
+                    <div class="candidate-footer">
+                        <span class="experience">${candidate.experience} years experience</span>
+                        <button class="action-btn">View Profile</button>
+                    </div>
+                `;
+
+                candidateGrid.appendChild(candidateCard);
+            });
+
+            resultsCount.textContent = filteredCandidates.length;
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            searchBox.value = '';
+            availabilityFilter.value = 'all';
+            experienceFilter.value = 'all';
+            skillFilter.value = 'all';
+            sortSelect.value = 'name';
+            
+            educationCheckboxes.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+
+            currentFilters = {
+                search: '',
+                education: ['B.Tech', 'M.Tech', 'PhD', 'MBA'],
+                availability: 'all',
+                experience: 'all',
+                skill: 'all'
+            };
+
+            applyFilters();
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

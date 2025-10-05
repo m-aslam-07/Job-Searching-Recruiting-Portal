@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OffCampus - Job Posting</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: #ff6b6b;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #000000;
+        }
+        
+        .page-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(62, 94, 233, 0.422);
+        }
+        
+        .page-title p {
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Recruiter Dashboard */
+        .recruiter-dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+        }
+        
+        .sidebar-menu i {
+            margin-right: 0.8rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Job Post Form */
+        .job-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section-title {
+            font-size: 1.3rem;
+            color: #6a11cb;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .requirements-list {
+            margin-top: 1rem;
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .requirement-input {
+            flex: 1;
+            margin-right: 0.5rem;
+        }
+        
+        .remove-requirement {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .add-requirement {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag-input-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background: rgba(106, 17, 203, 0.1);
+            color: #6a11cb;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .remove-tag {
+            background: none;
+            border: none;
+            color: #6a11cb;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Posted Jobs Section */
+        .posted-jobs {
+            margin-top: 3rem;
+        }
+        
+        .jobs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .jobs-table th, .jobs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .jobs-table th {
+            background: #f9f9f9;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .jobs-table td {
+            color: #555;
+        }
+        
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .status-draft {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+        
+        .status-closed {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.3rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .edit-btn {
+            color: #2196f3;
+        }
+        
+        .edit-btn:hover {
+            background: rgba(33, 150, 243, 0.1);
+        }
+        
+        .delete-btn {
+            color: #f44336;
+        }
+        
+        .delete-btn:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #6a11cb;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #ff6b6b;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+            
+            .recruiter-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .jobs-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <h1>OffCampus</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/Applicant/Applicant Career Resources.html">Career Resources</a></li>
+                    <li><a href="/about page.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="/Recruiter/Recruiter Candidates.html" class="btn-secondary" style="text-decoration: none; color: white; padding: 8px 15px; border-radius: 20px; background: rgba(255, 255, 255, 0.2);">
+                    <i class="fas fa-arrow-left"></i> View Candidates
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h2>Recruiter Portal</h2>
+            <p>Post job openings and manage your listings</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="stat-number" id="activeJobs">12</div>
+                <div class="stat-label">Active Jobs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-number" id="totalViews">1,245</div>
+                <div class="stat-label">Total Views</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" id="totalApplicants">87</div>
+                <div class="stat-label">Total Applicants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number" id="successRate">72%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <!-- Recruiter Dashboard -->
+        <div class="recruiter-dashboard">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><i class="fas fa-plus-circle"></i> Post New Job</a></li>
+                    <li><a href="#"><i class="fas fa-list"></i> My Job Listings</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Applicants</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Account Settings</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Job posted successfully!
+                </div>
+
+                <!-- Job Post Form -->
+                <div class="job-form-container">
+                    <h3 class="form-section-title">Post a New Job Opening</h3>
+                    
+                    <form id="jobPostForm">
+                        <!-- Basic Information Section -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Basic Information</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="jobTitle" class="form-label">Job Title *</label>
+                                    <input type="text" id="jobTitle" class="form-input" placeholder="e.g. Senior Frontend Developer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="companyName" class="form-label">Company Name *</label>
+                                    <input type="text" id="companyName" class="form-input" placeholder="e.g. Google" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="jobType" class="form-label">Job Type *</label>
+                                    <select id="jobType" class="form-select" required>
+                                        <option value="">Select Job Type</option>
+                                        <option value="Full-time">Full-time</option>
+                                        <option value="Part-time">Part-time</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Remote">Remote</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="form-label">Location *</label>
+                                    <input type="text" id="location" class="form-input" placeholder="e.g. San Francisco, CA (Remote)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salaryRange" class="form-label">Salary Range *</label>
+                                    <input type="text" id="salaryRange" class="form-input" placeholder="e.g. $120,000 - $150,000" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category" class="form-label">Job Category *</label>
+                                    <select id="category" class="form-select" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Product">Product</option>
+                                        <option value="Data Science">Data Science</option>
+                                        <option value="Operations">Operations</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description Section -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Job Description</h4>
+                            <div class="form-group full-width">
+                                <label for="jobDescription" class="form-label">Job Description *</label>
+                                <textarea id="jobDescription" class="form-textarea" placeholder="Describe the role, responsibilities, and what makes this job exciting..." required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Requirements Section -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Requirements & Qualifications</h4>
+                            <div class="form-group full-width">
+                                <label class="form-label">Requirements *</label>
+                                <div class="requirements-list" id="requirementsList">
+                                    <div class="requirement-item">
+                                        <input type="text" class="form-input requirement-input" placeholder="e.g. 5+ years of experience in frontend development">
+                                        <button type="button" class="remove-requirement">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="add-requirement" id="addRequirement">
+                                    <i class="fas fa-plus"></i> Add Requirement
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Skills & Tags Section -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Skills & Tags</h4>
+                            <div class="form-group full-width">
+                                <label class="form-label">Skills & Technologies</label>
+                                <div class="tag-input-container">
+                                    <input type="text" id="tagInput" class="form-input" placeholder="e.g. React, JavaScript, CSS">
+                                    <button type="button" class="btn-secondary" id="addTag">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                                <div class="tags-container" id="tagsContainer">
+                                    <!-- Tags will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Contact Information</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="contactEmail" class="form-label">Contact Email *</label>
+                                    <input type="email" id="contactEmail" class="form-input" placeholder="recruiter@company.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="applicationDeadline" class="form-label">Application Deadline</label>
+                                    <input type="date" id="applicationDeadline" class="form-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary">
+                                <i class="fas fa-save"></i> Save Draft
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Post Job
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Posted Jobs Section -->
+                <div class="posted-jobs">
+                    <h3 class="form-section-title">Recently Posted Jobs</h3>
+                    <table class="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Date Posted</th>
+                                <th>Applicants</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postedJobsTable">
+                            <!-- Jobs will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>OffCampus</h3>
+                <p>Connecting talented students with their dream jobs since 2023.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#">Job Listings</a>
+                <a href="#">Companies</a>
+                <a href="#">Career Resources</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <a href="mailto:info@offcampus.com">info@offcampus.com</a>
+                <a href="tel:+11234567890">+1 (123) 456-7890</a>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 OffCampus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data for recruiter dashboard
+        const postedJobs = [
+            {
+                id: 1,
+                title: "Senior Frontend Developer",
+                company: "TechCorp Inc.",
+                datePosted: "2023-10-15",
+                applicants: 24,
+                status: "active"
+            },
+            {
+                id: 2,
+                title: "UX/UI Designer",
+                company: "DesignStudio",
+                datePosted: "2023-10-10",
+                applicants: 18,
+                status: "active"
+            },
+            {
+                id: 3,
+                title: "Data Scientist",
+                company: "DataAnalytics Co.",
+                datePosted: "2023-10-05",
+                applicants: 32,
+                status: "closed"
+            },
+            {
+                id: 4,
+                title: "Product Manager",
+                company: "ProductLabs",
+                datePosted: "2023-10-01",
+                applicants: 15,
+                status: "active"
+            }
+        ];
+
+        // DOM Elements
+        const jobPostForm = document.getElementById('jobPostForm');
+        const requirementsList = document.getElementById('requirementsList');
+        const addRequirementBtn = document.getElementById('addRequirement');
+        const tagInput = document.getElementById('tagInput');
+        const addTagBtn = document.getElementById('addTag');
+        const tagsContainer = document.getElementById('tagsContainer');
+        const successMessage = document.getElementById('successMessage');
+        const postedJobsTable = document.getElementById('postedJobsTable');
+
+        // Initialize the page
+        function init() {
+            renderPostedJobs();
+            setupEventListeners();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Add requirement button
+            addRequirementBtn.addEventListener('click', addRequirementField);
+            
+            // Add tag button
+            addTagBtn.addEventListener('click', addTag);
+            
+            // Form submission
+            jobPostForm.addEventListener('submit', handleFormSubmit);
+            
+            // Remove requirement buttons (delegated event)
+            requirementsList.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-requirement')) {
+                    e.target.closest('.requirement-item').remove();
+                }
+            });
+            
+            // Remove tag buttons (delegated event)
+            tagsContainer.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-tag')) {
+                    e.target.closest('.tag').remove();
+                }
+            });
+            
+            // Enter key for tag input
+            tagInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addTag();
+                }
+            });
+        }
+
+        // Add a new requirement field
+        function addRequirementField() {
+            const requirementItem = document.createElement('div');
+            requirementItem.className = 'requirement-item';
+            requirementItem.innerHTML = `
+                <input type="text" class="form-input requirement-input" placeholder="e.g. 5+ years of experience in frontend development">
+                <button type="button" class="remove-requirement">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            requirementsList.appendChild(requirementItem);
+        }
+
+        // Add a new tag
+        function addTag() {
+            const tagText = tagInput.value.trim();
+            if (tagText) {
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `
+                    ${tagText}
+                    <button type="button" class="remove-tag">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                tagsContainer.appendChild(tag);
+                tagInput.value = '';
+            }
+        }
+
+        // Handle form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                title: document.getElementById('jobTitle').value,
+                company: document.getElementById('companyName').value,
+                type: document.getElementById('jobType').value,
+                location: document.getElementById('location').value,
+                salary: document.getElementById('salaryRange').value,
+                category: document.getElementById('category').value,
+                description: document.getElementById('jobDescription').value,
+                requirements: Array.from(document.querySelectorAll('.requirement-input'))
+                    .map(input => input.value)
+                    .filter(value => value.trim() !== ''),
+                tags: Array.from(document.querySelectorAll('.tag'))
+                    .map(tag => tag.textContent.trim()),
+                contactEmail: document.getElementById('contactEmail').value,
+                deadline: document.getElementById('applicationDeadline').value
+            };
+            
+            // Validate form
+            if (validateForm(formData)) {
+                // In a real application, you would send this data to a server
+                console.log('Job posting data:', formData);
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Reset form
+                jobPostForm.reset();
+                requirementsList.innerHTML = '<div class="requirement-item"><input type="text" class="form-input requirement-input" placeholder="e.g. 5+ years of experience in frontend development"><button type="button" class="remove-requirement"><i class="fas fa-times"></i></button></div>';
+                tagsContainer.innerHTML = '';
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+                // Add to posted jobs (for demo purposes)
+                addToPostedJobs(formData);
+            }
+        }
+
+        // Validate form data
+        function validateForm(data) {
+            // Check required fields
+            if (!data.title || !data.company || !data.type || !data.location || 
+                !data.salary || !data.category || !data.description || 
+                data.requirements.length === 0 || !data.contactEmail) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            // Check if at least one requirement is filled
+            if (data.requirements.some(req => req.trim() === '')) {
+                alert('Please fill in all requirement fields or remove empty ones.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Add job to posted jobs table
+        function addToPostedJobs(jobData) {
+            const newJob = {
+                id: postedJobs.length + 1,
+                title: jobData.title,
+                company: jobData.company,
+                datePosted: new Date().toISOString().split('T')[0],
+                applicants: 0,
+                status: 'active'
+            };
+            
+            postedJobs.unshift(newJob);
+            renderPostedJobs();
+            updateStats();
+        }
+
+        // Render posted jobs table
+        function renderPostedJobs() {
+            postedJobsTable.innerHTML = '';
+            
+            if (postedJobs.length === 0) {
+                postedJobsTable.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #666;">No jobs posted yet</td></tr>';
+                return;
+            }
+            
+            postedJobs.forEach(job => {
+                const row = document.createElement('tr');
+                
+                // Format date
+                const date = new Date(job.datePosted);
+                const formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Status badge
+                let statusClass = '';
+                let statusText = '';
+                switch(job.status) {
+                    case 'active':
+                        statusClass = 'status-active';
+                        statusText = 'Active';
+                        break;
+                    case 'draft':
+                        statusClass = 'status-draft';
+                        statusText = 'Draft';
+                        break;
+                    case 'closed':
+                        statusClass = 'status-closed';
+                        statusText = 'Closed';
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>${job.title}</td>
+                    <td>${job.company}</td>
+                    <td>${formattedDate}</td>
+                    <td>${job.applicants}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                postedJobsTable.appendChild(row);
+            });
+        }
+
+        // Update stats cards
+        function updateStats() {
+            const activeJobs = postedJobs.filter(job => job.status === 'active').length;
+            const totalApplicants = postedJobs.reduce((sum, job) => sum + job.applicants, 0);
+            
+            document.getElementById('activeJobs').textContent = activeJobs;
+            document.getElementById('totalApplicants').textContent = totalApplicants;
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

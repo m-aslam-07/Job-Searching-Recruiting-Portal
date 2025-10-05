@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account - Off Campus</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(to bottom right, #4361ee, #3a0ca3);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .left-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .features {
+            list-style-type: none;
+        }
+        
+        .features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .features i {
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .right-panel {
+            flex: 1.5;
+            background: white;
+            padding: 40px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h2 {
+            color: #4361ee;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #6c757d;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+            display: flex;
+            align-items: center;
+        }
+        
+        label i {
+            margin-right: 8px;
+            color: #4361ee;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        input:focus, select:focus {
+            border-color: #4361ee;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.4);
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #3a0ca3, #4361ee);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.5);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #6c757d;
+        }
+        
+        .login-link a {
+            color: #4361ee;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-panel {
+                padding: 30px;
+            }
+            
+            .right-panel {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .left-panel h1 {
+                font-size: 2rem;
+            }
+            
+            .form-header h2 {
+                font-size: 1.7rem;
+            }
+        }
+        
+        /* Animation for form elements */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>Join Off Campus</h1>
+            <p>Create your account to access thousands of job opportunities tailored for students and recent graduates.</p>
+            <ul class="features">
+                <li><i class="fas fa-briefcase"></i> Access to exclusive job postings</li>
+                <li><i class="fas fa-building"></i> Connect with top companies</li>
+                <li><i class="fas fa-bell"></i> Get personalized job alerts</li>
+                <li><i class="fas fa-file-alt"></i> Easy application process</li>
+                <li><i class="fas fa-graduation-cap"></i> Student-focused opportunities</li>
+            </ul>
+        </div>
+        
+        <div class="right-panel">
+            <div class="form-header">
+                <h2>Create Your Account</h2>
+                <p>Please fill in your details to get started</p>
+            </div>
+            
+            <form autocomplete="on" action="/Applicant/Profile.html ">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                        <input id="name" type="text" name="Full Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input id="email" type="email" name="email id" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phno"><i class="fas fa-phone"></i> Phone</label>
+                        <input id="phno" type="tel" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="uni"><i class="fas fa-university"></i> University</label>
+                        <input id="uni" type="text" name="university" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="course"><i class="fas fa-graduation-cap"></i> Course</label>
+                        <select id="course" name="course" required>
+                            <option value="">Select your course</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="business">Business Administration</option>
+                            <option value="arts">Arts & Humanities</option>
+                            <option value="science">Science</option>
+                            <option value="medical">Medical Sciences</option>
+                            <option value="law">Law</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="roll"><i class="fas fa-id-card"></i> Student Roll Number</label>
+                        <input id="roll" type="text" name="roll" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nationality"><i class="fas fa-globe"></i> Nationality</label>
+                        <input id="nationality" type="text" name="nationality" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="abcid"><i class="fas fa-id-badge"></i> ABC ID</label>
+                        <input id="abcid" type="number" name="abcid" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="/Applicant/Applicant login.html">Login here</a>
+            </div>
+        </div>
+    </div>
+<!--
+    <script>
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const inputs = document.querySelectorAll('input, select');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = 'red';
+                    isValid = false;
+                    
+                    // Reset border color after 2 seconds
+                    setTimeout(() => {
+                        input.style.borderColor = '#e2e8f0';
+                    }, 2000);
+                }
+            });
+            
+            if (isValid) {
+                // Form is valid, you would typically submit to a server here
+                alert('Account created successfully! Redirecting to login...');
+                // window.location.href = '/Applicant/Applicant login.html';
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+        
+        // Add animation to form elements when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach(group => {
+                group.style.opacity = 0;
+            });
+        });
+    </script>-->
+</body>
+</html>

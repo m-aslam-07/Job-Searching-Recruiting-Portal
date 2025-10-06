@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="0; URL='First%20page.html'" />
+    <title>Choose a Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f5f5f5;
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to the main page...</p>
+    <h2>Select a Page to Open</h2>
+    <button onclick="window.location.href='First%20page.html'">Open Capstone Project</button>
+    <button onclick="window.location.href='#'">Open Lab Activity</button>
 </body>
 </html>

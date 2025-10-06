@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+
+<html lang="en"> 
+
+<head> 
+
+  <meta charset="UTF-8"> 
+
+  <title>JavaScript Event Handling</title> 
+
+  <style> 
+
+    body { font-family: Arial, sans-serif; padding: 20px; } 
+
+    button, input, textarea { margin: 10px 0; display: block; } 
+
+    #message { margin-top: 15px; font-weight: bold; } 
+
+  </style> 
+
+</head> 
+
+<body> 
+
+  <button id="btnClick">Click Me</button> 
+
+  <button id="btnMouse">Hold Mouse</button> 
+
+  <input type="text" id="inputBox" placeholder="Type something..."> 
+
+  <textarea id="textArea" placeholder="Write here..."></textarea> 
+
+  <div id="message"></div> 
+
+  
+
+  <script> 
+
+    document.getElementById("btnClick").onclick = function() { 
+
+      document.getElementById("message").innerText = "Button Clicked!"; 
+
+    }; 
+
+    document.getElementById("btnMouse").onmousedown = function() { 
+
+      document.getElementById("message").innerText = "Mouse Down on Button!"; 
+
+    }; 
+
+    document.getElementById("btnMouse").onmouseup = function() { 
+
+      document.getElementById("message").innerText = "Mouse Released!"; 
+
+    }; 
+
+    document.getElementById("inputBox").onchange = function() { 
+
+      document.getElementById("message").innerText = "Input Changed: " + this.value; 
+
+    }; 
+
+    document.getElementById("textArea").onmouseover = function() { 
+
+      this.style.backgroundColor = "#f0f0f0"; 
+
+      document.getElementById("message").innerText = "Mouse Over Text Area!"; 
+
+    }; 
+
+    document.getElementById("textArea").onmouseout = function() { 
+
+      this.style.backgroundColor = "white"; 
+
+      document.getElementById("message").innerText = "Mouse Out of Text Area!"; 
+
+    }; 
+
+  </script> 
+
+</body> 
+
+</html> 
